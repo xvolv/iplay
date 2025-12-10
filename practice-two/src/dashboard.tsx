@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 interface Transaction {
   hash: string;
@@ -6,7 +6,7 @@ interface Transaction {
   to: string;
   value: number;
   timestamp: string;
-  status: 'confirmed' | 'pending' | 'failed';
+  status: "confirmed" | "pending" | "failed";
   fee: number;
 }
 
@@ -33,114 +33,118 @@ const Dashboard: React.FC = () => {
     networkHashrate: 0,
     avgBlockTime: 0,
     gasPrice: 0,
-    marketCap: 0
+    marketCap: 0,
   });
 
   const [transactions, setTransactions] = useState<Transaction[]>([
     {
-      hash: '0xabc123...',
-      from: '0x123abc...',
-      to: '0x456def...',
+      hash: "0xabc123...",
+      from: "0x123abc...",
+      to: "0x456def...",
       value: 1.5,
-      timestamp: '2 min ago',
-      status: 'confirmed',
-      fee: 0.002
+      timestamp: "2 min ago",
+      status: "confirmed",
+      fee: 0.002,
     },
     {
-      hash: '0xdef456...',
-      from: '0x789ghi...',
-      to: '0x012jkl...',
+      hash: "0xdef456...",
+      from: "0x789ghi...",
+      to: "0x012jkl...",
       value: 0.8,
-      timestamp: '5 min ago',
-      status: 'pending',
-      fee: 0.003
+      timestamp: "5 min ago",
+      status: "pending",
+      fee: 0.003,
     },
     {
-      hash: '0xghi789...',
-      from: '0x345mno...',
-      to: '0x678pqr...',
+      hash: "0xghi789...",
+      from: "0x345mno...",
+      to: "0x678pqr...",
       value: 2.3,
-      timestamp: '10 min ago',
-      status: 'confirmed',
-      fee: 0.0015
+      timestamp: "10 min ago",
+      status: "confirmed",
+      fee: 0.0015,
     },
     {
-      hash: '0xjkl012...',
-      from: '0x901stu...',
-      to: '0x234vwx...',
+      hash: "0xjkl012...",
+      from: "0x901stu...",
+      to: "0x234vwx...",
       value: 1500,
-      timestamp: '15 min ago',
-      status: 'confirmed',
-      fee: 0.005
+      timestamp: "15 min ago",
+      status: "confirmed",
+      fee: 0.005,
     },
     {
-      hash: '0xmno345...',
-      from: '0x567yz0...',
-      to: '0x890123...',
+      hash: "0xmno345...",
+      from: "0x567yz0...",
+      to: "0x890123...",
       value: 25,
-      timestamp: '20 min ago',
-      status: 'failed',
-      fee: 0.001
-    }
+      timestamp: "20 min ago",
+      status: "failed",
+      fee: 0.001,
+    },
   ]);
-
+  const loadUsers = async () => {
+    const res = await fetch("http://localhost:4000/users");
+    const data = await res.json();
+    console.log(data);
+  };
   const [blocks, setBlocks] = useState<Block[]>([
     {
       number: 1567890,
-      timestamp: '2 min ago',
+      timestamp: "2 min ago",
       transactions: 145,
-      miner: '0xminer1...',
+      miner: "0xminer1...",
       size: 128,
-      reward: 2.1
+      reward: 2.1,
     },
     {
       number: 1567889,
-      timestamp: '4 min ago',
+      timestamp: "4 min ago",
       transactions: 89,
-      miner: '0xminer2...',
+      miner: "0xminer2...",
       size: 96,
-      reward: 2.0
+      reward: 2.0,
     },
     {
       number: 1567888,
-      timestamp: '6 min ago',
+      timestamp: "6 min ago",
       transactions: 167,
-      miner: '0xminer3...',
+      miner: "0xminer3...",
       size: 142,
-      reward: 2.2
+      reward: 2.2,
     },
     {
       number: 1567887,
-      timestamp: '8 min ago',
+      timestamp: "8 min ago",
       transactions: 112,
-      miner: '0xminer4...',
+      miner: "0xminer4...",
       size: 118,
-      reward: 2.0
+      reward: 2.0,
     },
     {
       number: 1567886,
-      timestamp: '10 min ago',
+      timestamp: "10 min ago",
       transactions: 98,
-      miner: '0xminer5...',
+      miner: "0xminer5...",
       size: 105,
-      reward: 1.9
-    }
+      reward: 1.9,
+    },
   ]);
 
   const [wallet, setWallet] = useState<Wallet>({
-    address: '0x742d35Cc6634C0532925a3b844Bc9eE0a43C3d97',
+    address: "0x742d35Cc6634C0532925a3b844Bc9eE0a43C3d97",
     balance: 2.5,
-    valueUSD: 8250.50,
+    valueUSD: 8250.5,
     tokens: [
-      { symbol: 'ETH', balance: 2.5, value: 8250.50 },
-      { symbol: 'USDC', balance: 1500, value: 1500 },
-      { symbol: 'UNI', balance: 50, value: 325 }
-    ]
+      { symbol: "ETH", balance: 2.5, value: 8250.5 },
+      { symbol: "USDC", balance: 1500, value: 1500 },
+      { symbol: "UNI", balance: 50, value: 325 },
+    ],
   });
 
-  const [network, setNetwork] = useState('ethereum');
-  const [search, setSearch] = useState('');
-  const [activeTab, setActiveTab] = useState('transactions');
+  const [network, setNetwork] = useState("ethereum");
+  const [search, setSearch] = useState("");
+  const [activeTab, setActiveTab] = useState("transactions");
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   useEffect(() => {
@@ -156,7 +160,7 @@ const Dashboard: React.FC = () => {
       networkHashrate: 245.6,
       avgBlockTime: 12.3,
       gasPrice: 45 + Math.floor(Math.random() * 20),
-      marketCap: 425000000000
+      marketCap: 425000000000,
     });
   };
 
@@ -170,10 +174,14 @@ const Dashboard: React.FC = () => {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'confirmed': return '#10b981';
-      case 'pending': return '#f59e0b';
-      case 'failed': return '#ef4444';
-      default: return '#6b7280';
+      case "confirmed":
+        return "#10b981";
+      case "pending":
+        return "#f59e0b";
+      case "failed":
+        return "#ef4444";
+      default:
+        return "#6b7280";
     }
   };
 
@@ -186,10 +194,14 @@ const Dashboard: React.FC = () => {
 
   const getTokenColor = (symbol: string) => {
     switch (symbol) {
-      case 'ETH': return '#627eea';
-      case 'USDC': return '#2775ca';
-      case 'UNI': return '#ff007a';
-      default: return '#8b5cf6';
+      case "ETH":
+        return "#627eea";
+      case "USDC":
+        return "#2775ca";
+      case "UNI":
+        return "#ff007a";
+      default:
+        return "#8b5cf6";
     }
   };
 
@@ -202,8 +214,8 @@ const Dashboard: React.FC = () => {
           <p style={styles.subtitle}>Real-time monitoring for {network}</p>
         </div>
         <div style={styles.headerControls}>
-          <select 
-            value={network} 
+          <select
+            value={network}
             onChange={(e) => setNetwork(e.target.value)}
             style={styles.select}
           >
@@ -212,12 +224,12 @@ const Dashboard: React.FC = () => {
             <option value="arbitrum">Arbitrum</option>
             <option value="optimism">Optimism</option>
           </select>
-          <button 
-            style={{...styles.button, opacity: isRefreshing ? 0.7 : 1}}
+          <button
+            style={{ ...styles.button, opacity: isRefreshing ? 0.7 : 1 }}
             onClick={handleRefresh}
             disabled={isRefreshing}
           >
-            {isRefreshing ? '🔄 Refreshing...' : '🔄 Refresh'}
+            {isRefreshing ? "🔄 Refreshing..." : "🔄 Refresh"}
           </button>
         </div>
       </div>
@@ -240,7 +252,9 @@ const Dashboard: React.FC = () => {
             <span style={styles.statTitle}>Total Transactions</span>
             <span>📊</span>
           </div>
-          <div style={styles.statValue}>{stats.totalTransactions.toLocaleString()}</div>
+          <div style={styles.statValue}>
+            {stats.totalTransactions.toLocaleString()}
+          </div>
           <div style={styles.statChange}>↑ 2.5%</div>
         </div>
 
@@ -249,7 +263,9 @@ const Dashboard: React.FC = () => {
             <span style={styles.statTitle}>Active Addresses</span>
             <span>👥</span>
           </div>
-          <div style={styles.statValue}>{stats.activeAddresses.toLocaleString()}</div>
+          <div style={styles.statValue}>
+            {stats.activeAddresses.toLocaleString()}
+          </div>
           <div style={styles.statChange}>↑ 1.8%</div>
         </div>
 
@@ -267,7 +283,7 @@ const Dashboard: React.FC = () => {
             <span>⛽</span>
           </div>
           <div style={styles.statValue}>{stats.gasPrice} Gwei</div>
-          <div style={{...styles.statChange, color: '#ef4444'}}>↑ 5.2%</div>
+          <div style={{ ...styles.statChange, color: "#ef4444" }}>↑ 5.2%</div>
         </div>
       </div>
 
@@ -290,18 +306,42 @@ const Dashboard: React.FC = () => {
               <div style={styles.chart}>
                 {[12, 18, 25, 32, 28, 21, 15].map((height, index) => (
                   <div key={index} style={styles.chartBarContainer}>
-                    <div style={{...styles.chartBar, height: `${height * 5}px`}}></div>
-                    <div style={styles.chartLabel}>{['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', '23:59'][index]}</div>
+                    <div
+                      style={{ ...styles.chartBar, height: `${height * 5}px` }}
+                    ></div>
+                    <div style={styles.chartLabel}>
+                      {
+                        [
+                          "00:00",
+                          "04:00",
+                          "08:00",
+                          "12:00",
+                          "16:00",
+                          "20:00",
+                          "23:59",
+                        ][index]
+                      }
+                    </div>
                   </div>
                 ))}
               </div>
               <div style={styles.chartLegend}>
                 <div style={styles.legendItem}>
-                  <div style={{...styles.legendColor, backgroundColor: '#8b5cf6'}}></div>
+                  <div
+                    style={{
+                      ...styles.legendColor,
+                      backgroundColor: "#8b5cf6",
+                    }}
+                  ></div>
                   <span style={styles.legendText}>TPS</span>
                 </div>
                 <div style={styles.legendItem}>
-                  <div style={{...styles.legendColor, backgroundColor: '#10b981'}}></div>
+                  <div
+                    style={{
+                      ...styles.legendColor,
+                      backgroundColor: "#10b981",
+                    }}
+                  ></div>
                   <span style={styles.legendText}>Gas Price</span>
                 </div>
               </div>
@@ -311,21 +351,23 @@ const Dashboard: React.FC = () => {
           {/* Transactions/Blocks Tabs */}
           <div style={styles.card}>
             <div style={styles.tabs}>
-              <button 
-                style={activeTab === 'transactions' ? styles.tabActive : styles.tab}
-                onClick={() => setActiveTab('transactions')}
+              <button
+                style={
+                  activeTab === "transactions" ? styles.tabActive : styles.tab
+                }
+                onClick={() => setActiveTab("transactions")}
               >
                 Recent Transactions
               </button>
-              <button 
-                style={activeTab === 'blocks' ? styles.tabActive : styles.tab}
-                onClick={() => setActiveTab('blocks')}
+              <button
+                style={activeTab === "blocks" ? styles.tabActive : styles.tab}
+                onClick={() => setActiveTab("blocks")}
               >
                 Recent Blocks
               </button>
             </div>
 
-            {activeTab === 'transactions' ? (
+            {activeTab === "transactions" ? (
               <div style={styles.tableContainer}>
                 <div style={styles.tableHeader}>
                   <div style={styles.tableHeaderCell}>TX Hash</div>
@@ -346,11 +388,19 @@ const Dashboard: React.FC = () => {
                       <div style={styles.address}>{tx.to}</div>
                     </div>
                     <div style={styles.tableCell}>
-                      <div style={styles.value}>{tx.value} {tx.value > 100 ? 'USDC' : 'ETH'}</div>
+                      <div style={styles.value}>
+                        {tx.value} {tx.value > 100 ? "USDC" : "ETH"}
+                      </div>
                       <div style={styles.fee}>Fee: {tx.fee} ETH</div>
                     </div>
                     <div style={styles.tableCell}>
-                      <span style={{...styles.status, backgroundColor: getStatusColor(tx.status) + '20', color: getStatusColor(tx.status)}}>
+                      <span
+                        style={{
+                          ...styles.status,
+                          backgroundColor: getStatusColor(tx.status) + "20",
+                          color: getStatusColor(tx.status),
+                        }}
+                      >
                         {tx.status}
                       </span>
                     </div>
@@ -397,14 +447,19 @@ const Dashboard: React.FC = () => {
               <h2 style={styles.cardTitle}>Wallet Balance</h2>
               <button style={styles.copyButton}>📋</button>
             </div>
-            
+
             <div style={styles.walletAddress}>
-              {wallet.address.substring(0, 8)}...{wallet.address.substring(wallet.address.length - 4)}
+              {wallet.address.substring(0, 8)}...
+              {wallet.address.substring(wallet.address.length - 4)}
             </div>
 
             <div style={styles.walletBalance}>
               <div style={styles.totalBalance}>
-                ${wallet.valueUSD.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
+                $
+                {wallet.valueUSD.toLocaleString("en-US", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
               </div>
               <div style={styles.ethBalance}>{wallet.balance} ETH</div>
             </div>
@@ -425,12 +480,21 @@ const Dashboard: React.FC = () => {
                 {wallet.tokens.map((token, index) => (
                   <div key={index} style={styles.tokenItem}>
                     <div style={styles.tokenInfo}>
-                      <div style={{...styles.tokenDot, backgroundColor: getTokenColor(token.symbol)}}></div>
+                      <div
+                        style={{
+                          ...styles.tokenDot,
+                          backgroundColor: getTokenColor(token.symbol),
+                        }}
+                      ></div>
                       <span style={styles.tokenSymbol}>{token.symbol}</span>
                     </div>
                     <div style={styles.tokenValues}>
-                      <div style={styles.tokenBalance}>{token.balance} {token.symbol}</div>
-                      <div style={styles.tokenValue}>${token.value.toLocaleString()}</div>
+                      <div style={styles.tokenBalance}>
+                        {token.balance} {token.symbol}
+                      </div>
+                      <div style={styles.tokenValue}>
+                        ${token.value.toLocaleString()}
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -451,7 +515,9 @@ const Dashboard: React.FC = () => {
               <div style={styles.statusRow}>
                 <span style={styles.statusLabel}>Status:</span>
                 <span style={styles.statusValue}>
-                  <span style={{...styles.statusDot, backgroundColor: '#10b981'}}></span>
+                  <span
+                    style={{ ...styles.statusDot, backgroundColor: "#10b981" }}
+                  ></span>
                   Online
                 </span>
               </div>
@@ -465,7 +531,7 @@ const Dashboard: React.FC = () => {
               </div>
             </div>
             <div style={styles.progressBar}>
-              <div style={{...styles.progressFill, width: '95%'}}></div>
+              <div style={{ ...styles.progressFill, width: "95%" }}></div>
             </div>
           </div>
         </div>
@@ -476,446 +542,442 @@ const Dashboard: React.FC = () => {
 
 const styles = {
   container: {
-    backgroundColor: '#111827',
-    minHeight: '100vh',
-    color: '#f9fafb',
-    padding: '20px',
-    fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif'
+    backgroundColor: "#111827",
+    minHeight: "100vh",
+    color: "#f9fafb",
+    padding: "20px",
+    fontFamily: "-apple-system, BlinkMacSystemFont, sans-serif",
   },
   header: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: '24px'
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: "24px",
   },
   title: {
-    fontSize: '28px',
-    fontWeight: 'bold',
-    marginBottom: '4px'
+    fontSize: "28px",
+    fontWeight: "bold",
+    marginBottom: "4px",
   },
   subtitle: {
-    color: '#9ca3af',
-    fontSize: '14px'
+    color: "#9ca3af",
+    fontSize: "14px",
   },
   headerControls: {
-    display: 'flex',
-    gap: '12px',
-    alignItems: 'center'
+    display: "flex",
+    gap: "12px",
+    alignItems: "center",
   },
   select: {
-    backgroundColor: '#1f2937',
-    color: '#f9fafb',
-    border: '1px solid #374151',
-    padding: '8px 12px',
-    borderRadius: '6px',
-    fontSize: '14px'
+    backgroundColor: "#1f2937",
+    color: "#f9fafb",
+    border: "1px solid #374151",
+    padding: "8px 12px",
+    borderRadius: "6px",
+    fontSize: "14px",
   },
   button: {
-    backgroundColor: '#3b82f6',
-    color: 'white',
-    border: 'none',
-    padding: '8px 16px',
-    borderRadius: '6px',
-    fontSize: '14px',
-    cursor: 'pointer',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '6px'
+    backgroundColor: "#3b82f6",
+    color: "white",
+    border: "none",
+    padding: "8px 16px",
+    borderRadius: "6px",
+    fontSize: "14px",
+    cursor: "pointer",
+    display: "flex",
+    alignItems: "center",
+    gap: "6px",
   },
   searchContainer: {
-    marginBottom: '24px'
+    marginBottom: "24px",
   },
   searchInput: {
-    width: '100%',
-    backgroundColor: '#1f2937',
-    color: '#f9fafb',
-    border: '1px solid #374151',
-    padding: '10px 16px',
-    borderRadius: '6px',
-    fontSize: '14px'
+    width: "100%",
+    backgroundColor: "#1f2937",
+    color: "#f9fafb",
+    border: "1px solid #374151",
+    padding: "10px 16px",
+    borderRadius: "6px",
+    fontSize: "14px",
   },
   statsGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-    gap: '16px',
-    marginBottom: '24px'
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+    gap: "16px",
+    marginBottom: "24px",
   },
   statCard: {
-    backgroundColor: '#1f2937',
-    border: '1px solid #374151',
-    borderRadius: '8px',
-    padding: '16px'
+    backgroundColor: "#1f2937",
+    border: "1px solid #374151",
+    borderRadius: "8px",
+    padding: "16px",
   },
   statHeader: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: '8px'
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: "8px",
   },
   statTitle: {
-    color: '#9ca3af',
-    fontSize: '14px'
+    color: "#9ca3af",
+    fontSize: "14px",
   },
   statValue: {
-    fontSize: '24px',
-    fontWeight: 'bold',
-    marginBottom: '4px'
+    fontSize: "24px",
+    fontWeight: "bold",
+    marginBottom: "4px",
   },
   statChange: {
-    color: '#10b981',
-    fontSize: '12px'
+    color: "#10b981",
+    fontSize: "12px",
   },
   mainContent: {
-    display: 'grid',
-    gridTemplateColumns: '2fr 1fr',
-    gap: '24px'
+    display: "grid",
+    gridTemplateColumns: "2fr 1fr",
+    gap: "24px",
   },
   leftColumn: {
-    display: 'flex',
-    flexDirection: 'column' as 'column',
-    gap: '24px'
+    display: "flex",
+    flexDirection: "column" as "column",
+    gap: "24px",
   },
   rightColumn: {
-    display: 'flex',
-    flexDirection: 'column' as 'column',
-    gap: '24px'
+    display: "flex",
+    flexDirection: "column" as "column",
+    gap: "24px",
   },
   card: {
-    backgroundColor: '#1f2937',
-    border: '1px solid #374151',
-    borderRadius: '8px',
-    padding: '20px'
+    backgroundColor: "#1f2937",
+    border: "1px solid #374151",
+    borderRadius: "8px",
+    padding: "20px",
   },
   cardHeader: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: '20px'
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: "20px",
   },
   cardTitle: {
-    fontSize: '18px',
-    fontWeight: '600'
+    fontSize: "18px",
+    fontWeight: "600",
   },
   timeFilters: {
-    display: 'flex',
-    gap: '8px'
+    display: "flex",
+    gap: "8px",
   },
   timeButton: {
-    backgroundColor: '#374151',
-    color: '#9ca3af',
-    border: 'none',
-    padding: '6px 12px',
-    borderRadius: '4px',
-    fontSize: '12px',
-    cursor: 'pointer'
+    backgroundColor: "#374151",
+    color: "#9ca3af",
+    border: "none",
+    padding: "6px 12px",
+    borderRadius: "4px",
+    fontSize: "12px",
+    cursor: "pointer",
   },
   timeButtonActive: {
-    backgroundColor: '#3b82f6',
-    color: 'white',
-    border: 'none',
-    padding: '6px 12px',
-    borderRadius: '4px',
-    fontSize: '12px',
-    cursor: 'pointer'
+    backgroundColor: "#3b82f6",
+    color: "white",
+    border: "none",
+    padding: "6px 12px",
+    borderRadius: "4px",
+    fontSize: "12px",
+    cursor: "pointer",
   },
   chartContainer: {
-    marginTop: '20px'
+    marginTop: "20px",
   },
   chart: {
-    display: 'flex',
-    alignItems: 'flex-end',
-    gap: '20px',
-    height: '200px',
-    padding: '20px 0'
+    display: "flex",
+    alignItems: "flex-end",
+    gap: "20px",
+    height: "200px",
+    padding: "20px 0",
   },
   chartBarContainer: {
-    display: 'flex',
-    flexDirection: 'column' as 'column',
-    alignItems: 'center',
-    flex: '1'
+    display: "flex",
+    flexDirection: "column" as "column",
+    alignItems: "center",
+    flex: "1",
   },
   chartBar: {
-    width: '20px',
-    backgroundColor: '#8b5cf6',
-    borderRadius: '4px 4px 0 0',
-    marginBottom: '8px'
+    width: "20px",
+    backgroundColor: "#8b5cf6",
+    borderRadius: "4px 4px 0 0",
+    marginBottom: "8px",
   },
   chartLabel: {
-    fontSize: '12px',
-    color: '#9ca3af'
+    fontSize: "12px",
+    color: "#9ca3af",
   },
   chartLegend: {
-    display: 'flex',
-    gap: '20px',
-    marginTop: '20px'
+    display: "flex",
+    gap: "20px",
+    marginTop: "20px",
   },
   legendItem: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px'
+    display: "flex",
+    alignItems: "center",
+    gap: "8px",
   },
   legendColor: {
-    width: '12px',
-    height: '12px',
-    borderRadius: '2px'
+    width: "12px",
+    height: "12px",
+    borderRadius: "2px",
   },
   legendText: {
-    fontSize: '12px',
-    color: '#9ca3af'
+    fontSize: "12px",
+    color: "#9ca3af",
   },
   tabs: {
-    display: 'flex',
-    borderBottom: '1px solid #374151',
-    marginBottom: '16px'
+    display: "flex",
+    borderBottom: "1px solid #374151",
+    marginBottom: "16px",
   },
   tab: {
-    padding: '12px 24px',
-    backgroundColor: 'transparent',
-    border: 'none',
-    color: '#9ca3af',
-    cursor: 'pointer',
-    fontSize: '14px'
+    padding: "12px 24px",
+    backgroundColor: "transparent",
+    border: "none",
+    color: "#9ca3af",
+    cursor: "pointer",
+    fontSize: "14px",
   },
   tabActive: {
-    padding: '12px 24px',
-    backgroundColor: 'transparent',
-    border: 'none',
-    color: '#3b82f6',
-    cursor: 'pointer',
-    fontSize: '14px',
-    borderBottom: '2px solid #3b82f6'
+    padding: "12px 24px",
+    backgroundColor: "transparent",
+    border: "none",
+    color: "#3b82f6",
+    cursor: "pointer",
+    fontSize: "14px",
+    borderBottom: "2px solid #3b82f6",
   },
-  tableContainer: {
-    
-  },
+  tableContainer: {},
   tableHeader: {
-    display: 'grid',
-    gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr',
-    padding: '12px 16px',
-    backgroundColor: '#374151',
-    borderRadius: '4px',
-    marginBottom: '8px'
+    display: "grid",
+    gridTemplateColumns: "2fr 1fr 1fr 1fr 1fr",
+    padding: "12px 16px",
+    backgroundColor: "#374151",
+    borderRadius: "4px",
+    marginBottom: "8px",
   },
   tableHeaderCell: {
-    fontSize: '12px',
-    color: '#9ca3af',
-    fontWeight: '500'
+    fontSize: "12px",
+    color: "#9ca3af",
+    fontWeight: "500",
   },
   tableRow: {
-    display: 'grid',
-    gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr',
-    padding: '12px 16px',
-    borderBottom: '1px solid #374151',
-    alignItems: 'center'
+    display: "grid",
+    gridTemplateColumns: "2fr 1fr 1fr 1fr 1fr",
+    padding: "12px 16px",
+    borderBottom: "1px solid #374151",
+    alignItems: "center",
   },
   tableCell: {
-    fontSize: '14px'
+    fontSize: "14px",
   },
   hash: {
-    fontFamily: 'monospace',
-    fontSize: '12px',
-    color: '#3b82f6',
-    cursor: 'pointer'
+    fontFamily: "monospace",
+    fontSize: "12px",
+    color: "#3b82f6",
+    cursor: "pointer",
   },
   address: {
-    fontFamily: 'monospace',
-    fontSize: '12px',
-    color: '#9ca3af'
+    fontFamily: "monospace",
+    fontSize: "12px",
+    color: "#9ca3af",
   },
   value: {
-    fontWeight: '500'
+    fontWeight: "500",
   },
   fee: {
-    fontSize: '12px',
-    color: '#9ca3af'
+    fontSize: "12px",
+    color: "#9ca3af",
   },
   status: {
-    padding: '4px 8px',
-    borderRadius: '4px',
-    fontSize: '12px',
-    fontWeight: '500'
+    padding: "4px 8px",
+    borderRadius: "4px",
+    fontSize: "12px",
+    fontWeight: "500",
   },
   blockNumber: {
-    color: '#3b82f6',
-    fontWeight: '600'
+    color: "#3b82f6",
+    fontWeight: "600",
   },
   txCount: {
-    backgroundColor: '#374151',
-    padding: '4px 8px',
-    borderRadius: '4px',
-    fontSize: '12px',
-    display: 'inline-block'
+    backgroundColor: "#374151",
+    padding: "4px 8px",
+    borderRadius: "4px",
+    fontSize: "12px",
+    display: "inline-block",
   },
   size: {
-    fontSize: '14px'
+    fontSize: "14px",
   },
   reward: {
-    color: '#10b981',
-    fontWeight: '500'
+    color: "#10b981",
+    fontWeight: "500",
   },
   copyButton: {
-    backgroundColor: 'transparent',
-    border: 'none',
-    color: '#9ca3af',
-    cursor: 'pointer',
-    fontSize: '16px',
-    padding: '4px'
+    backgroundColor: "transparent",
+    border: "none",
+    color: "#9ca3af",
+    cursor: "pointer",
+    fontSize: "16px",
+    padding: "4px",
   },
   walletAddress: {
-    backgroundColor: '#374151',
-    padding: '8px 12px',
-    borderRadius: '4px',
-    fontFamily: 'monospace',
-    fontSize: '14px',
-    marginBottom: '20px',
-    cursor: 'pointer'
+    backgroundColor: "#374151",
+    padding: "8px 12px",
+    borderRadius: "4px",
+    fontFamily: "monospace",
+    fontSize: "14px",
+    marginBottom: "20px",
+    cursor: "pointer",
   },
   walletBalance: {
-    marginBottom: '20px'
+    marginBottom: "20px",
   },
   totalBalance: {
-    fontSize: '32px',
-    fontWeight: 'bold',
-    marginBottom: '4px'
+    fontSize: "32px",
+    fontWeight: "bold",
+    marginBottom: "4px",
   },
   ethBalance: {
-    fontSize: '18px',
-    color: '#3b82f6'
+    fontSize: "18px",
+    color: "#3b82f6",
   },
-  tokenDistribution: {
-    
-  },
+  tokenDistribution: {},
   sectionTitle: {
-    fontSize: '16px',
-    fontWeight: '600',
-    marginBottom: '16px'
+    fontSize: "16px",
+    fontWeight: "600",
+    marginBottom: "16px",
   },
   pieChart: {
-    position: 'relative' as 'relative',
-    height: '150px',
-    marginBottom: '20px'
+    position: "relative" as "relative",
+    height: "150px",
+    marginBottom: "20px",
   },
   pieChartInner: {
-    position: 'relative' as 'relative',
-    width: '150px',
-    height: '150px',
-    margin: '0 auto',
-    borderRadius: '50%',
-    overflow: 'hidden'
+    position: "relative" as "relative",
+    width: "150px",
+    height: "150px",
+    margin: "0 auto",
+    borderRadius: "50%",
+    overflow: "hidden",
   },
   pieSegment1: {
-    position: 'absolute' as 'absolute',
-    width: '100%',
-    height: '100%',
-    backgroundColor: '#627eea',
-    clipPath: 'polygon(50% 50%, 50% 0%, 100% 0%, 100% 100%, 50% 50%)'
+    position: "absolute" as "absolute",
+    width: "100%",
+    height: "100%",
+    backgroundColor: "#627eea",
+    clipPath: "polygon(50% 50%, 50% 0%, 100% 0%, 100% 100%, 50% 50%)",
   },
   pieSegment2: {
-    position: 'absolute' as 'absolute',
-    width: '100%',
-    height: '100%',
-    backgroundColor: '#2775ca',
-    clipPath: 'polygon(50% 50%, 100% 0%, 100% 100%, 0% 100%, 50% 50%)'
+    position: "absolute" as "absolute",
+    width: "100%",
+    height: "100%",
+    backgroundColor: "#2775ca",
+    clipPath: "polygon(50% 50%, 100% 0%, 100% 100%, 0% 100%, 50% 50%)",
   },
   pieSegment3: {
-    position: 'absolute' as 'absolute',
-    width: '100%',
-    height: '100%',
-    backgroundColor: '#ff007a',
-    clipPath: 'polygon(50% 50%, 100% 100%, 0% 100%, 0% 0%, 50% 50%)'
+    position: "absolute" as "absolute",
+    width: "100%",
+    height: "100%",
+    backgroundColor: "#ff007a",
+    clipPath: "polygon(50% 50%, 100% 100%, 0% 100%, 0% 0%, 50% 50%)",
   },
   pieChartCenter: {
-    position: 'absolute' as 'absolute',
-    width: '75px',
-    height: '75px',
-    backgroundColor: '#1f2937',
-    borderRadius: '50%',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)'
+    position: "absolute" as "absolute",
+    width: "75px",
+    height: "75px",
+    backgroundColor: "#1f2937",
+    borderRadius: "50%",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
   },
   tokenList: {
-    display: 'flex',
-    flexDirection: 'column' as 'column',
-    gap: '12px'
+    display: "flex",
+    flexDirection: "column" as "column",
+    gap: "12px",
   },
   tokenItem: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: '8px 0',
-    borderBottom: '1px solid #374151'
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: "8px 0",
+    borderBottom: "1px solid #374151",
   },
   tokenInfo: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px'
+    display: "flex",
+    alignItems: "center",
+    gap: "8px",
   },
   tokenDot: {
-    width: '10px',
-    height: '10px',
-    borderRadius: '50%'
+    width: "10px",
+    height: "10px",
+    borderRadius: "50%",
   },
   tokenSymbol: {
-    fontWeight: '500'
+    fontWeight: "500",
   },
   tokenValues: {
-    textAlign: 'right' as 'right'
+    textAlign: "right" as "right",
   },
   tokenBalance: {
-    fontWeight: '500'
+    fontWeight: "500",
   },
   tokenValue: {
-    fontSize: '12px',
-    color: '#9ca3af'
+    fontSize: "12px",
+    color: "#9ca3af",
   },
   walletActions: {
-    display: 'flex',
-    gap: '8px',
-    marginTop: '20px'
+    display: "flex",
+    gap: "8px",
+    marginTop: "20px",
   },
   actionButton: {
-    flex: '1',
-    backgroundColor: '#374151',
-    color: '#f9fafb',
-    border: 'none',
-    padding: '10px',
-    borderRadius: '6px',
-    cursor: 'pointer',
-    fontSize: '14px'
+    flex: "1",
+    backgroundColor: "#374151",
+    color: "#f9fafb",
+    border: "none",
+    padding: "10px",
+    borderRadius: "6px",
+    cursor: "pointer",
+    fontSize: "14px",
   },
   statusInfo: {
-    marginBottom: '16px'
+    marginBottom: "16px",
   },
   statusRow: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    marginBottom: '8px'
+    display: "flex",
+    justifyContent: "space-between",
+    marginBottom: "8px",
   },
   statusLabel: {
-    color: '#9ca3af'
+    color: "#9ca3af",
   },
   statusValue: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '6px'
+    display: "flex",
+    alignItems: "center",
+    gap: "6px",
   },
   statusDot: {
-    width: '6px',
-    height: '6px',
-    borderRadius: '50%'
+    width: "6px",
+    height: "6px",
+    borderRadius: "50%",
   },
   progressBar: {
-    height: '8px',
-    backgroundColor: '#374151',
-    borderRadius: '4px',
-    overflow: 'hidden'
+    height: "8px",
+    backgroundColor: "#374151",
+    borderRadius: "4px",
+    overflow: "hidden",
   },
   progressFill: {
-    height: '100%',
-    backgroundColor: '#3b82f6',
-    borderRadius: '4px'
-  }
+    height: "100%",
+    backgroundColor: "#3b82f6",
+    borderRadius: "4px",
+  },
 };
 
 export default Dashboard;
